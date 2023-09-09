@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ExceptionControllerAdvice {
+public class RuntimeExceptionAdvice {
 
 	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<String> webControllerAdvice(RuntimeException e) {
+	public ResponseEntity<String> runtimeExceptionAdvice(RuntimeException e) {
 		return ResponseEntity.badRequest().body(e.getMessage());
 	}
 }
