@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,5 +42,11 @@ public class CustomerWebController {
 	public ResponseEntity<CustomerDto> getById(@PathVariable Long id) {
 		Customer customer = customerService.findById(id);
 		return ResponseEntity.accepted().body(CustomerDto.createCustomerDto(customer));
+	}
+	
+	@DeleteMapping("/customers/{id}")
+	public ResponseEntity<String> deleteById(@PathVariable Long id){
+		customerService.deleteById(id);
+		return ResponseEntity.accepted().body("The customer id = '" + id + "' deleted!");
 	}
 }

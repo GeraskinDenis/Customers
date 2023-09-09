@@ -33,4 +33,9 @@ public class CustomerService {
 			return new RuntimeException(message);
 		});
 	}
+
+	public void deleteById(Long id) {
+		Customer c = findById(id);
+		customerDao.deleteById(c.getId());
+	}
 }
