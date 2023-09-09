@@ -16,11 +16,11 @@ import ru.geraskindenis.service.CustomerService;
 import ru.geraskindenis.web.dto.CustomerDto;
 
 @RestController
-public class WebController {
-	private static final Logger LOGGER = Logger.getLogger(WebController.class.getName());
+public class CustomerWebController {
+	private static final Logger LOGGER = Logger.getLogger(CustomerWebController.class.getName());
 	private CustomerService customerService;
 
-	private WebController(CustomerService customerService) {
+	private CustomerWebController(CustomerService customerService) {
 		this.customerService = customerService;
 	}
 
