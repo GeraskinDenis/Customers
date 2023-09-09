@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS customer(
+id SERIAL PRIMARY KEY,
+name VARCHAR(100) NOT NULL);
+
+CREATE TABLE IF NOT EXISTS customer_contact(
+id SERIAL PRIMARY KEY,
+customer_id INT REFERENCES customer(id),
+contact_type VARCHAR(30) NOT NULL, 
+contact VARCHAR(100) NOT NULL);
