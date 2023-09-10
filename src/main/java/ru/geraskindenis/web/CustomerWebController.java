@@ -26,9 +26,10 @@ public class CustomerWebController {
 	}
 
 	@PostMapping("/customers")
-	public void createCustomer(@Valid @RequestBody CustomerDto customerDto) {
-		LOGGER.info("Create customer request received: " + customerDto);
-		customerService.createCustomer(Customer.builder().setName(customerDto.getName()).build());
+	public ResponseEntity<CustomerDto> createCustomer(@Valid @RequestBody CustomerDto customerDto) {
+		Customer customer = customerService
+				.createCustomer(Customer.builder().setId(customerDto.getId()).setName(customerDto.getName()).build());
+		return ResponseEntity.accepted().body(CustomerDto.createCustomerDto(customer));
 	}
 
 	@GetMapping("/customers")
@@ -43,9 +44,9 @@ public class CustomerWebController {
 		Customer customer = customerService.findById(id);
 		return ResponseEntity.accepted().body(CustomerDto.createCustomerDto(customer));
 	}
-	
+
 	@DeleteMapping("/customers/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable Long id){
+	public ResponseEntity<String> deleteById(@PathVariable Long id) {
 		customerService.deleteById(id);
 		return ResponseEntity.accepted().body("The customer id = '" + id + "' deleted!");
 	}

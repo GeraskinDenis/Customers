@@ -18,8 +18,19 @@ public class CustomerService {
 		this.customerDao = customerDao;
 	}
 
-	public void createCustomer(Customer customer) {
-		customerDao.save(customer);
+	public Customer createCustomer(Customer customer) {
+		List<Customer> customers = customerDao.findCustomerByName(customer.getName());
+		if (customers.isEmpty()) {
+			customer = customerDao.save(customer);
+			LOGGER.info("Create customer:" + customer);
+		} else {
+			customer = customers.get(0);
+		}
+		return customer;
+	}
+
+	public List<Customer> findByName(String name) {
+		return customerDao.findCustomerByName(name);
 	}
 
 	public List<Customer> findAll() {
@@ -28,14 +39,17 @@ public class CustomerService {
 
 	public Customer findById(long id) {
 		return customerDao.findById(id).orElseThrow(() -> {
-			String message = "The customer id = '" + id + "' not found.";
+			String message = "Search error by id: Customer id = '" + id + "' not found.";
 			LOGGER.log(Level.WARNING, message);
 			return new RuntimeException(message);
 		});
 	}
 
 	public void deleteById(Long id) {
-		Customer c = findById(id);
-		customerDao.deleteById(c.getId());
+		if (!customerDao.existsById(id)) {
+			throw new RuntimeException("Error deletion by id: Customer id = '" + id + "' not found.");
+		}
+		customerDao.deleteById(id);
+		LOGGER.log(Level.INFO, "The customer id = '" + id + "' deleted.");
 	}
 }
